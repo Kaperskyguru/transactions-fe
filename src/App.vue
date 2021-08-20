@@ -14,10 +14,6 @@ export default {
   components: {
     NavBar,
   },
-
-  created() {
-    this.$store.dispatch("all", {});
-  },
 };
 </script>
 

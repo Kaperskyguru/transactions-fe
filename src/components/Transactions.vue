@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="transaction in data" :key="transaction.id">
-          <td>{{ transaction }}</td>
+          <td>{{ transaction.account }}</td>
           <td>{{ transaction.reference }}</td>
           <td>{{ transaction.amount }}</td>
           <td>{{ transaction.status }}</td>

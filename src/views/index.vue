@@ -17,6 +17,7 @@
           <Transactions :data="transactions" />
         </div>
       </div>
+      <Loader :show="show" />
     </div>
   </section>
 </template>
@@ -30,9 +31,19 @@ export default {
     Transactions,
     FilterByDate,
   },
-
+  data() {
+    return {
+      show: false,
+    };
+  },
   computed: {
     ...mapState(["transactions", "errors"]),
+  },
+
+  async created() {
+    this.show = true;
+    await this.$store.dispatch("all", {});
+    this.show = false;
   },
 };
 </script>
