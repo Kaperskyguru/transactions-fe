@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="transaction in data" :key="transaction.id">
-          <td>{{ transaction.account }}</td>
+          <td>{{ transaction }}</td>
           <td>{{ transaction.reference }}</td>
           <td>{{ transaction.amount }}</td>
           <td>{{ transaction.status }}</td>
@@ -30,7 +30,12 @@
         </tr>
       </tbody>
     </table>
-    <div style="color: red" v-if="data.length === 0" class="text-center">
+    <div
+      style="color: red"
+      v-if="data.length === 0"
+      class="text-center"
+      id="error"
+    >
       {{ errors }}
     </div>
     <nav aria-label="">
@@ -51,11 +56,8 @@
 <script>
 import { mapState } from "vuex";
 export default {
+  name: "Transactions",
   props: {
-    show: {
-      type: Boolean,
-      default: false,
-    },
     data: {
       type: [Array, Object],
       default: () => [],
