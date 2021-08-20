@@ -13,6 +13,7 @@
               <FilterByDate />
             </div>
           </div>
+
           <Transactions :data="transactions" />
         </div>
       </div>
@@ -31,7 +32,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["transactions"]),
+    ...mapState(["transactions", "errors"]),
   },
 };
 </script>

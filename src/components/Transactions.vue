@@ -30,6 +30,9 @@
         </tr>
       </tbody>
     </table>
+    <div style="color: red" v-if="data.length === 0" class="text-center">
+      {{ errors }}
+    </div>
     <nav aria-label="">
       <ul class="pagination">
         <li class="page-item" :class="{ disabled: isPreviousEnd }">
@@ -46,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: {
     show: {
@@ -65,6 +69,7 @@ export default {
   },
 
   computed: {
+    ...mapState(["errors"]),
     isPreviousEnd() {
       return this.skip === 0;
     },

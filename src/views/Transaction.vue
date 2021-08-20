@@ -18,6 +18,7 @@
               </div> -->
               <div class="col-md-12">
                 <table
+                  v-if="transaction"
                   class="
                     table table-bordered table-hover table-active
                     text-white
@@ -74,6 +75,9 @@
                     <td>{{ formatDate(transaction.updatedAt) }}</td>
                   </tr>
                 </table>
+                <div style="color: red" v-if="!transaction" class="text-center">
+                  Transactions not found
+                </div>
               </div>
             </div>
           </section>
@@ -85,8 +89,10 @@
 
 <script>
 export default {
-  beforeCreate() {
-    this.$store.dispatch("all");
+  created() {
+    if (this.$store.getters.all().length < 1) {
+      this.$store.dispatch("all", {});
+    }
   },
 
   computed: {

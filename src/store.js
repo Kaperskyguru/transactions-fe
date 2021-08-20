@@ -9,12 +9,16 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     transactions: [],
-    errors: [],
+    errors: "",
   },
 
   getters: {
     show: (state) => (id) => {
       return state.transactions.find((transaction) => transaction.id === id);
+    },
+
+    all: (state) => () => {
+      return state.transactions;
     },
   },
 
@@ -22,23 +26,37 @@ const store = new Vuex.Store({
     async all({ commit }, { size = 20, skip = 0 }) {
       const response = await Transactions.get(size, skip);
       const { data } = response;
-      commit("STORE_TRANSACTIONS", data);
+
+      if (data.success) {
+        commit("STORE_TRANSACTIONS", data.transactions);
+        return;
+      } else {
+        commit("STORE_ERROR", data.message);
+      }
     },
 
     async filterByStartEndDate({ commit }, payload) {
       const response = await Transactions.filterByDate(payload);
       const { data } = response;
-      commit("STORE_TRANSACTIONS", data);
+
+      console.log(data.success);
+      if (data.success) {
+        commit("STORE_TRANSACTIONS", data.transactions);
+      } else {
+        commit("STORE_ERROR", data.message);
+      }
     },
   },
 
   mutations: {
     STORE_TRANSACTIONS: (state, payload) => {
       state.transactions = payload;
+      state.errors = "";
     },
 
     STORE_ERROR: (state, payload) => {
       state.errors = payload;
+      state.transactions = [];
     },
   },
 });
